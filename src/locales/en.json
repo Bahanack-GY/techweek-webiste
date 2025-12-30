@@ -1,0 +1,188 @@
+{
+    "navbar": {
+        "links": {
+            "about": "About",
+            "speakers": "Speakers",
+            "schedule": "Schedule",
+            "sponsors": "Sponsors"
+        },
+        "cta": "Participate"
+    },
+    "footer": {
+        "brand": {
+            "subtitle": "From ENSPY to the Nation. A synergy between engineering schools and the industrial sector."
+        },
+        "quick_links": {
+            "title": "Quick Links",
+            "about": "About Us",
+            "activities": "Activities",
+            "schedule": "Schedule",
+            "participating_schools": "Participating Schools"
+        },
+        "contact": {
+            "title": "Contact"
+        },
+        "rights": "Club Génie Informatique - ENSPY. All rights reserved."
+    },
+    "hero": {
+        "date_badge": "March, 2025",
+        "title_top": "SHAPING THE",
+        "title_highlight": "FUTURE",
+        "title_bottom": "OF TECH",
+        "subtitle": "Join the most influential minds in technology for 6 days of innovation, inspiration, and connection in the heart of Cameroon.",
+        "cta_participate": "Participate",
+        "cta_schedule": "View Schedule",
+        "location": "Ecole nationale Supérieure Polytechnique, Yaoundé",
+        "date_bottom": "March, 2025"
+    },
+    "about": {
+        "stats": {
+            "schools": "Schools",
+            "participants": "Participants",
+            "days": "Days",
+            "activities": "Activities"
+        },
+        "vision_title": "Vision & Ambition",
+        "main_title_start": "From",
+        "main_title_enspy": "ENSPY",
+        "main_title_mid": "to the",
+        "main_title_end": "Nation",
+        "p1_start": "Building on the success of initiatives like HackVerse, the",
+        "p1_club": "Club Génie Informatique (GI)",
+        "p1_end": "of ENSPY is taking a giant leap forward with",
+        "p1_event": "Tech Week 2025",
+        "p1_full": "Building on the success of initiatives like HackVerse, the <1>Club Génie Informatique (GI)</1> of ENSPY is taking a giant leap forward with <3>Tech Week 2025</3>.",
+        "p2": "Our goal is to create an unprecedented synergy between major engineering schools and the national industrial sector. For one week, ENSPY will become the epicenter of technological innovation in Cameroon.",
+        "learn_more": "Learn more about the vision"
+    },
+    "activities": {
+        "title_badge": "What to Expect",
+        "title_main": "An Ecosystem of",
+        "title_highlight": "Innovation",
+        "description": "Tech Week is designed as a total immersion of 6 days, offering a variety of activities for all skill levels.",
+        "cards": {
+            "fair": {
+                "title": "Innovation Fair",
+                "description": "An exhibition space where companies, startups, and engineering schools showcase their solutions."
+            },
+            "hackathon": {
+                "title": "Hackathon '24h Chrono'",
+                "description": "A non-stop intensive programming marathon focused on a national challenge."
+            },
+            "cybersecurity": {
+                "title": "Cybersecurity Contest",
+                "description": "A competition to submit and strengthen data protection skills."
+            },
+            "best_app": {
+                "title": "Best App Award",
+                "description": "An excellence award for the best software application developed during the year."
+            },
+            "pitch": {
+                "title": "Pitch Contest",
+                "description": "A platform for young entrepreneurs to convince investors."
+            }
+        }
+    },
+    "speakers": {
+        "title_badge": "World-Class Speakers",
+        "title_main": "Learn from the",
+        "title_highlight": "Industry Leaders"
+    },
+    "schedule": {
+        "title_badge": "Chronogram",
+        "title_main": "6 Inspiring Days of",
+        "title_highlight": "Innovation",
+        "days": {
+            "day1": {
+                "title": "Launch",
+                "events": {
+                    "opening": "Solemn Opening Ceremony",
+                    "visit": "Inaugural Fair Visit",
+                    "conferences": "Thematic Conferences"
+                }
+            },
+            "day2": {
+                "title": "Education",
+                "events": {
+                    "pitch_training": "Pitch Training",
+                    "project_contest": "Project Contest (Secondary)"
+                }
+            },
+            "day3": {
+                "title": "Entrepreneurship",
+                "events": {
+                    "pitch_contest": "Pitch Contest (Higher Ed)",
+                    "cultural_night": "Cultural Night 'Pipo Dance & Slam'"
+                }
+            },
+            "day4": {
+                "title": "Cyber-resilience",
+                "events": {
+                    "hacking_contest": "Grand National Hacking Contest"
+                }
+            },
+            "day5": {
+                "title": "Production",
+                "events": {
+                    "hackathon_launch": "24h Hackathon Launch",
+                    "dev": "Non-stop Development"
+                }
+            },
+            "day6": {
+                "title": "Prestige",
+                "events": {
+                    "hackathon_close": "Hackathon Closing",
+                    "gala": "GALA Night"
+                }
+            }
+        }
+    },
+    "national_institutions": {
+        "title_badge": "Under the High Patronage of",
+        "title_main": "National",
+        "title_highlight": "Institutions"
+    },
+    "participating_schools": {
+        "title_badge": "The Coalition",
+        "title_main": "Participating",
+        "title_highlight": "Institutions"
+    },
+    "call_for_participation": {
+        "title_badge": "Get Involved",
+        "title_main": "Be Part of the",
+        "title_highlight": "Revolution",
+        "tabs": {
+            "participants": "Participants",
+            "exposants": "Exhibitors"
+        },
+        "participants": {
+            "description": "Join thousands of students, professionals, and tech enthusiasts. Access all conferences, workshops, and the innovation fair.",
+            "features": [
+                "Access to all conferences",
+                "Workshops & Training",
+                "Hackathon & Competitions",
+                "Networking Opportunities",
+                "After-work Events"
+            ],
+            "cta": "Get Your Ticket",
+            "price": "Free"
+        },
+        "exposants": {
+            "description": "Showcase your company, startup, or school to a targeted audience of tech enthusiasts and future engineers.",
+            "features": [
+                "Exhibition Booth",
+                "Brand Visibility",
+                "Talent Recruitment",
+                "B2B Networking",
+                "Product Demo"
+            ],
+            "cta": "Reserve a Booth",
+            "price": "Contact Us"
+        }
+    },
+    "sponsors": {
+        "title_badge": "Our Partners",
+        "title_main": "They Trust",
+        "title_highlight": "Us"
+    }
+}
