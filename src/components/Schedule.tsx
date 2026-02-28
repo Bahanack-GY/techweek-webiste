@@ -28,6 +28,7 @@ export default function Schedule() {
   const sectionRef = useRef<HTMLElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const revealerRef = useRef<SVGRectElement>(null);
+  const finalCtaRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     const scrollContainer = scrollContainerRef.current;
@@ -39,7 +40,7 @@ export default function Schedule() {
       scrollTrigger: {
         trigger: sectionRef.current,
         start: "top top",
-        end: () => `+=${scrollContainer.scrollWidth - window.innerWidth + 1000}`, 
+        end: () => `+=${scrollContainer.scrollWidth - window.innerWidth + 3000}`, 
         pin: true,
         scrub: 1,
         invalidateOnRefresh: true,
@@ -74,6 +75,21 @@ export default function Schedule() {
         Math.max(0, schedulePositions[i].x - 5) // Start popping exactly when the line hits it
       );
     });
+
+    // Fade out timeline and show CTA at the very end
+    tl.to(scrollContainer, {
+        autoAlpha: 0,
+        scale: 0.9,
+        duration: 15
+    }, 150); // Increased distance (wait extra scroll cycles)
+
+    const finalCta = finalCtaRef.current;
+    if (finalCta) {
+        gsap.set(finalCta, { scale: 0.5, autoAlpha: 0, y: 150, rotation: -4 });
+        tl.to(finalCta, {
+            scale: 1, autoAlpha: 1, y: 0, rotation: 0, ease: "back.out(1.5)", duration: 15
+        }, 155);
+    }
 
   }, { scope: sectionRef });
 
@@ -151,6 +167,19 @@ export default function Schedule() {
 
          </div>
       </div>
+
+      {/* ========================================= */}
+      {/* FINAL CTA (Hidden initially)              */}
+      {/* ========================================= */}
+      <div ref={finalCtaRef} className="absolute inset-0 items-center justify-center z-30 pointer-events-none invisible flex">
+        <div className="flex flex-col items-center gap-6 md:gap-8 pointer-events-auto px-4 z-40">
+          <h2 className="text-[10vw] sm:text-7xl md:text-8xl lg:text-9xl font-black font-display uppercase tracking-tighter text-black text-center leading-[0.9] flex flex-col items-center">
+            <span className="block bg-[#FF0000] text-white px-6 py-2 md:py-4 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform -rotate-2 mb-4">NE MANQUEZ</span>
+            <span className="block bg-[#f29323] text-black px-6 py-2 md:py-4 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform rotate-1">AUCUN JOUR</span>
+          </h2>
+        </div>
+      </div>
+
     </section>
   );
 }
