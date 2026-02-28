@@ -1,114 +1,156 @@
-import { motion } from 'motion/react';
-import { Clock } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { useRef } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { CalendarDays, Route as RouteIcon } from 'lucide-react';
 
-const Schedule = () => {
-    const { t } = useTranslation();
+gsap.registerPlugin(ScrollTrigger);
 
-    const schedule = [
-        {
-            day: "Day 1",
-            title: t('schedule.days.day1.title'),
-            events: [
-                { time: "09:00 AM", title: t('schedule.days.day1.events.opening'), type: "Ceremony" },
-                { time: "11:00 AM", title: t('schedule.days.day1.events.visit'), type: "Exhibition" },
-                { time: "02:00 PM", title: t('schedule.days.day1.events.conferences'), type: "Conference" },
-            ]
-        },
-        {
-            day: "Day 2",
-            title: t('schedule.days.day2.title'),
-            events: [
-                { time: "09:00 AM", title: t('schedule.days.day2.events.pitch_training'), type: "Training" },
-                { time: "02:00 PM", title: t('schedule.days.day2.events.project_contest'), type: "Competition" },
-            ]
-        },
-        {
-            day: "Day 3",
-            title: t('schedule.days.day3.title'),
-            events: [
-                { time: "09:00 AM", title: t('schedule.days.day3.events.pitch_contest'), type: "Competition" },
-                { time: "06:00 PM", title: t('schedule.days.day3.events.cultural_night'), type: "Social" },
-            ]
-        },
-        {
-            day: "Day 4",
-            title: t('schedule.days.day4.title'),
-            events: [
-                { time: "08:00 AM", title: t('schedule.days.day4.events.hacking_contest'), type: "Competition" },
-            ]
-        },
-        {
-            day: "Day 5",
-            title: t('schedule.days.day5.title'),
-            events: [
-                { time: "08:00 AM", title: t('schedule.days.day5.events.hackathon_launch'), type: "Hackathon" },
-                { time: "All Day", title: t('schedule.days.day5.events.dev'), type: "Hackathon" },
-            ]
-        },
-        {
-            day: "Day 6",
-            title: t('schedule.days.day6.title'),
-            events: [
-                { time: "08:00 AM", title: t('schedule.days.day6.events.hackathon_close'), type: "Hackathon" },
-                { time: "07:00 PM", title: t('schedule.days.day6.events.gala'), type: "Gala" },
-            ]
-        },
-    ];
+const scheduleItems = [
+  { day: "J1", date: "Lun 23 Mars", title: "Ouverture & Expo", description: "Cérémonie, Visite des Stands et Conférence.", color: "#196aab", textColor: "white" },
+  { day: "J2", date: "Mar 24 Mars", title: "Projets & Pitch", description: "Concours de projets Junior & pitch intensif.", color: "#FF0000", textColor: "white" },
+  { day: "J3", date: "Mer 25 Mars", title: "Seniors & Culture", description: "Projets Senior, Soirée au Canal Olympia.", color: "#f29323", textColor: "black" },
+  { day: "J4", date: "Jeu 26 Mars", title: "Sécurité", description: "Cyber Security Contest et ateliers techniques.", color: "#196aab", textColor: "white" },
+  { day: "J5", date: "Ven 27 Mars", title: "HackVerse", description: "Lancement officiel de la 3e édition.", color: "#FF0000", textColor: "white" },
+  { day: "J6", date: "Sam 28 Mars", title: "Clôture & Gala", description: "Délibérations et Grande Soirée de Gala.", color: "#f29323", textColor: "black" }
+];
 
-    return (
-        <section id="schedule" className="py-24 bg-black relative">
-            <div className="container mx-auto px-6">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-                     <div>
-                        <h2 className="text-sm font-mono font-bold text-[var(--color-brand-orange)] uppercase tracking-widest mb-4">
-                            {t('schedule.title_badge')}
-                        </h2>
-                        <h3 className="text-4xl md:text-5xl font-bold">
-                            {t('schedule.title_main')} <br /><span className="text-gray-500">{t('schedule.title_highlight')}</span>
-                        </h3>
-                    </div>
+const schedulePositions = [
+  { x: 15, y: 50 },
+  { x: 31, y: 25 },
+  { x: 47, y: 75 },
+  { x: 63, y: 25 },
+  { x: 79, y: 75 },
+  { x: 95, y: 50 },
+];
+
+export default function Schedule() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const revealerRef = useRef<SVGRectElement>(null);
+
+  useGSAP(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) return;
+
+    const scrollAmount = () => -(scrollContainer.scrollWidth - window.innerWidth);
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top top",
+        end: () => `+=${scrollContainer.scrollWidth - window.innerWidth + 1000}`, 
+        pin: true,
+        scrub: 1,
+        invalidateOnRefresh: true,
+      }
+    });
+
+    // Horizontal scroll
+    tl.to(scrollContainer, {
+      x: scrollAmount,
+      ease: "none",
+      duration: 100
+    }, 0);
+
+    // Unmask the snake drawing sequentially matching the scroll
+    if (revealerRef.current) {
+        tl.to(revealerRef.current, {
+           attr: { width: 100 },
+           ease: "none",
+           duration: 100
+        }, 0);
+    }
+
+    // Pop the cards sync'd perfectly with the drawing tip!
+    const cards = gsap.utils.toArray('.snake-card');
+    cards.forEach((card: any, i) => {
+      // Must set the baseline transform for GSAP to not conflict with CSS
+      gsap.set(card, { xPercent: -50, yPercent: -50 });
+      
+      tl.fromTo(card, 
+        { scale: 0, autoAlpha: 0, rotation: -10 },
+        { scale: 1, autoAlpha: 1, rotation: 0, ease: "back.out(1.5)", duration: 8 },
+        Math.max(0, schedulePositions[i].x - 5) // Start popping exactly when the line hits it
+      );
+    });
+
+  }, { scope: sectionRef });
+
+  return (
+    <section ref={sectionRef} id="schedule" className="relative h-screen bg-slate-50 overflow-hidden border-b-6 border-black">
+      {/* Brutalist Grid Background */}
+      <div className="absolute inset-0 opacity-10 pointer-events-none z-0" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, black 2px, transparent 0)', backgroundSize: '40px 40px' }}></div>
+      
+      {/* Map Header */}
+      <div className="absolute top-8 md:top-12 left-6 md:left-12 z-20 pointer-events-none">
+         <h2 className="text-3xl md:text-5xl lg:text-7xl font-black font-display uppercase tracking-widest text-black flex items-center gap-3 md:gap-4">
+           <span className="bg-[#f29323] p-2 md:p-3 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform -rotate-3">
+             <RouteIcon className="w-8 h-8 md:w-12 md:h-12 text-black" />
+           </span>
+           <span className="bg-white px-4 py-4 border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] text-black">ROADMAP</span>
+         </h2>
+      </div>
+
+      {/* GSAP Scroll Container */}
+      <div className="absolute inset-y-0 w-full z-10 flex items-center">
+         <div ref={scrollContainerRef} className="relative flex items-center shrink-0 w-[500vw] sm:w-[350vw] md:w-[250vw] lg:w-[200vw] h-[85vh] min-h-[600px]">
+            
+            {/* Background path line (Light Gray) */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 100 100" preserveAspectRatio="none">
+               <path d="M 0 50 L 15 50 L 31 25 L 47 75 L 63 25 L 79 75 L 95 50 L 100 50" 
+                     fill="none" stroke="#E2E8F0" strokeWidth="8" vectorEffect="non-scaling-stroke" strokeLinejoin="bevel" strokeLinecap="square" />
+            </svg>
+
+            {/* Foreground drawing line (Black) */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 100 100" preserveAspectRatio="none">
+               <defs>
+                 <clipPath id="snake-clip">
+                   <rect ref={revealerRef} x="0" y="0" width="0" height="100" />
+                 </clipPath>
+               </defs>
+               <path d="M 0 50 L 15 50 L 31 25 L 47 75 L 63 25 L 79 75 L 95 50 L 100 50" 
+                     fill="none" stroke="black" strokeWidth="10" vectorEffect="non-scaling-stroke" strokeLinejoin="bevel" strokeLinecap="square" clipPath="url(#snake-clip)" />
+            </svg>
+
+            {/* Timline Cards perfectly aligned over the SVG path nodes */}
+            {scheduleItems.map((item, index) => {
+              const pos = schedulePositions[index];
+              return (
+                <div 
+                  key={index}
+                  className="snake-card  absolute z-20 w-[240px] sm:w-[280px] md:w-[320px] lg:w-[360px]"
+                  style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
+                >
+                   {/* Middle connector dot */}
+                   <div className="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 md:w-8 md:h-8 border-4 border-black z-[-1] bg-white transform rotate-45"></div>
+                   
+                   {/* Main Card */}
+                   <div className="bg-white p-6 md:p-8 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 transition-all duration-300 relative group">
+                      
+                      {/* Date Indicator tag */}
+                      <div className="absolute -top-4 -left-3 md:-top-5 md:-left-4 px-3 py-1.5 md:px-4 md:py-2 border-4 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex items-center gap-2 font-black font-display uppercase tracking-widest text-xs md:text-sm" style={{ backgroundColor: item.color, color: item.textColor }}>
+                         <CalendarDays className="w-4 h-4 md:w-5 md:h-5 mr-1" />
+                         <span>{item.day}</span>
+                         <span className="w-1.5 h-1.5 bg-current rounded-full"></span>
+                         <span>{item.date}</span>
+                      </div>
+
+                      <h3 className="text-xl md:text-2xl mt-4 md:mt-6 font-black font-display uppercase leading-tight text-black group-hover:underline decoration-4 underline-offset-4 decoration-[#f29323] transition-colors">
+                         {item.title}
+                      </h3>
+                      
+                      <p className="mt-4 md:mt-5 text-sm md:text-base text-slate-800 font-medium leading-relaxed bg-[--color-light] p-3 border-l-4 border-black">
+                         {item.description}
+                      </p>
+                      
+                   </div>
                 </div>
+              );
+            })}
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {schedule.map((day, dayIndex) => (
-                        <motion.div 
-                            key={day.day}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: dayIndex * 0.1 }}
-                            className="bg-[var(--color-brand-dark)] rounded-3xl p-8 border border-white/5"
-                        >
-                            <div className="flex justify-between items-center mb-6 pb-6 border-b border-white/5">
-                                <div>
-                                    <h4 className="text-2xl font-bold">{day.day}</h4>
-                                    <span className="text-sm text-gray-400 font-mono">{day.title}</span>
-                                </div>
-                                <span className="text-[var(--color-brand-orange)] font-bold text-xl"></span>
-                            </div>
-                            
-                            <div className="space-y-4">
-                                {day.events.map((event, index) => (
-                                    <div key={index} className="group flex gap-4 items-start hover:bg-white/5 p-3 rounded-lg transition-colors cursor-pointer">
-                                        <div className="min-w-20 pt-1">
-                                            <div className="flex items-center gap-1 text-xs font-mono text-gray-400">
-                                                <Clock size={12} /> {event.time}
-                                            </div>
-                                        </div>
-                                        <div className="flex-grow">
-                                            <h5 className="text-base font-bold mb-1 group-hover:text-[var(--color-brand-orange)] transition-colors">{event.title}</h5>
-                                            <span className="inline-block px-2 py-0.5 bg-white/5 rounded text-[10px] text-gray-400 uppercase tracking-wider">{event.type}</span>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
-};
-
-export default Schedule;
+         </div>
+      </div>
+    </section>
+  );
+}

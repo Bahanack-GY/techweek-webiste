@@ -1,14 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
-import Layout from './layouts/Layout';
+
 
 function App() {
   return (
-    <Layout>
       <Routes>
         <Route path="/" element={<Home />} />
       </Routes>
-    </Layout>
   );
 }
 
