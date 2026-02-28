@@ -18,10 +18,11 @@ const schoolsList = [
   { name: "Institut Siantou", location: "Yaoundé", bgColor: "bg-[#f29323]", textColor: "text-black" },
   { name: "IAI Cameroun", location: "Yaoundé", bgColor: "bg-white", textColor: "text-black" },
   { name: "UPAC", location: "Yaoundé", bgColor: "bg-[#FFFF00]", textColor: "text-black" },
-  { name: "SUPTIC", location: "Yaoundé", bgColor: "bg-black", textColor: "text-white" },
-  { name: "Ngoa Ekele", location: "Yaoundé", bgColor: "bg-[#FF0000]", textColor: "text-white" },
+  { name: "sup'tic", location: "Yaoundé", bgColor: "bg-black", textColor: "text-white" },
+  { name: "Faculté de Sciences de l'Université de Yaoundé 1", location: "Yaoundé", bgColor: "bg-[#FF0000]", textColor: "text-white" },
   { name: "ICT University", location: "Yaoundé", bgColor: "bg-[#196aab]", textColor: "text-white" },
-  { name: "Keyce", location: "Douala / Yaoundé", bgColor: "bg-[#f29323]", textColor: "text-black" }
+  { name: "Keyce", location: "Douala / Yaoundé", bgColor: "bg-[#f29323]", textColor: "text-black" },
+  { name: "IUT Douala", location: "Douala", bgColor: "bg-white", textColor: "text-black" }
 ];
 
 export default function Schools() {
