@@ -36,16 +36,20 @@ export default function ImageGenerator() {
       // Small delay to ensure any fonts/images are fully rendered
       await new Promise(resolve => setTimeout(resolve, 100));
       
-      const dataUrl = await htmlToImage.toPng(frameRef.current, {
+      const blob = await htmlToImage.toBlob(frameRef.current, {
         quality: 1.0,
         pixelRatio: 2, // higher resolution
         cacheBust: true,
       });
 
+      if (!blob) throw new Error("Impossible de générer l'image");
+
+      const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.download = `techweek-2026-${name.replace(/\s+/g, '-').toLowerCase() || 'participant'}.png`;
-      link.href = dataUrl;
+      link.href = url;
       link.click();
+      URL.revokeObjectURL(url);
 
       // Track download in backend (fire-and-forget)
       fetch(`${API_URL}/analytics/download`, { method: 'POST' }).catch(() => {});
@@ -63,15 +67,15 @@ export default function ImageGenerator() {
     try {
       await new Promise(resolve => setTimeout(resolve, 100));
       
-      const dataUrl = await htmlToImage.toBlob(frameRef.current, {
+      const blob = await htmlToImage.toBlob(frameRef.current, {
         quality: 1.0,
         pixelRatio: 2,
         cacheBust: true,
       });
 
-      if (!dataUrl) throw new Error("Impossible de générer l'image");
+      if (!blob) throw new Error("Impossible de générer l'image");
 
-      const file = new File([dataUrl], 'techweek-2026-badge.png', { type: 'image/png' });
+      const file = new File([blob], 'techweek-2026-badge.png', { type: 'image/png' });
       const text = `Je serai à la Tech Week ENSPY 2026 ! Et vous ? #tw-enspy #techweekenspy #innovationcmr #clubgi-enspy #hackathonenspy2026 #cybersecurite`;
 
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
