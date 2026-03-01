@@ -85,6 +85,13 @@ export default function Hero() {
     }
   };
 
+  const scrollToRegistration = () => {
+    const regSection = document.getElementById('registration');
+    if (regSection) {
+      regSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section 
       ref={container}
@@ -133,8 +140,11 @@ export default function Hero() {
                 <ArrowRight className="w-6 h-6 stroke-3 group-hover:translate-x-1 transition-transform" />
               </button>
               
-              <button className="hero-btn w-full sm:w-auto px-8 py-4 bg-white text-black font-black text-lg uppercase tracking-wider border-4 border-black hover:bg-black hover:text-white transition-colors duration-200 cursor-pointer">
-                S'inscrire
+              <button 
+                onClick={scrollToRegistration}
+                className="hero-btn w-full sm:w-auto px-6 py-4 bg-white text-black font-black text-sm md:text-md uppercase tracking-wider border-4 border-black hover:bg-black hover:text-white transition-colors duration-200 cursor-pointer"
+              >
+                S'inscrire A un concours
               </button>
             </div>
 

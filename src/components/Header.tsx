@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import logo from '../assets/Tech-week-final-no-bg.png';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,6 +16,14 @@ export default function Header() {
   }, []);
 
   const scrollToSection = (id: string) => {
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+      return;
+    }
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -31,7 +42,7 @@ export default function Header() {
           {/* Logo */}
           <div 
             className="cursor-pointer"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            onClick={() => navigate('/')}
           >
             <img 
               src={logo} 
@@ -55,19 +66,26 @@ export default function Header() {
               ACTIVITÉS
             </button>
             <button 
-              onClick={() => scrollToSection('schedule')} 
-              className="hover:underline decoration-4 underline-offset-8 transition-all"
+              onClick={() => navigate('/shop')} 
+              className="hover:underline decoration-4 text-[#22C55E] underline-offset-8 transition-all"
             >
-              CHRONOGRAMME
+              BOUTIQUE
+            </button>
+            <button 
+              onClick={() => navigate('/image')} 
+              className="hover:underline decoration-4 text-[#3B82F6] underline-offset-8 transition-all bg-[#EFF6FF] px-2 py-1 border-2 border-black -rotate-2 shadow-[2px_2px_0px_0px_#1E40AF]"
+            >
+              BADGE
             </button>
           </nav>
 
           {/* CTA Button */}
           <div>
             <button 
+              onClick={() => scrollToSection('registration')}
               className="uppercase font-black text-xs md:text-sm lg:text-base tracking-wider bg-[#f29323] text-black px-6 py-3 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 transition-all outline-none cursor-pointer"
             >
-              S'INSCRIRE
+              S'INSCRIRE A UN CONCOURS
             </button>
           </div>
 

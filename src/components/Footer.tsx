@@ -1,6 +1,28 @@
+import { useState, type FormEvent } from 'react';
 import { MapPin, Phone, Mail, Send, Facebook, Linkedin, Instagram, Twitter, ArrowRight } from 'lucide-react';
 
+const WHATSAPP_NUMBER = '237683862442';
+
 export default function Footer() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [subject, setSubject] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleContact = (e: FormEvent) => {
+    e.preventDefault();
+    const text = [
+      `*Nom:* ${name}`,
+      `*Email:* ${email}`,
+      `*Sujet:* ${subject}`,
+      `*Message:* ${message}`,
+    ].join('\n');
+
+    window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`,
+      '_blank',
+    );
+  };
   return (
     <footer className="bg-[--color-light] pt-20 pb-8 border-t-6 md:border-t-8 border-[--color-dark] relative overflow-hidden">
       
@@ -140,25 +162,25 @@ export default function Footer() {
                 <p className="mt-4 font-bold text-slate-600">Vous avez une question ou une proposition de partenariat ? Écrivez-nous directement.</p>
               </div>
 
-              <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+              <form className="space-y-6" onSubmit={handleContact}>
                 <div className="space-y-2">
                   <label htmlFor="name" className="block text-sm font-black text-[--color-dark] uppercase tracking-wider">Nom Complet</label>
-                  <input type="text" id="name" placeholder="John Doe" className="w-full bg-[--color-light] p-3 pl-4 border-2 border-[--color-dark] shadow-[4px_4px_0px_0px_var(--color-dark)] focus:outline-none focus:ring-0 focus:shadow-[2px_2px_0px_0px_var(--color-dark)] focus:translate-y-0.5 focus:translate-x-0.5 transition-all font-medium text-[--color-dark]" />
+                  <input type="text" id="name" required value={name} onChange={(e) => setName(e.target.value)} placeholder="John Doe" className="w-full bg-[--color-light] p-3 pl-4 border-2 border-[--color-dark] shadow-[4px_4px_0px_0px_var(--color-dark)] focus:outline-none focus:ring-0 focus:shadow-[2px_2px_0px_0px_var(--color-dark)] focus:translate-y-0.5 focus:translate-x-0.5 transition-all font-medium text-[--color-dark]" />
                 </div>
-                
+
                 <div className="space-y-2">
                   <label htmlFor="email" className="block text-sm font-black text-[--color-dark] uppercase tracking-wider">Adresse Email</label>
-                  <input type="email" id="email" placeholder="john@example.com" className="w-full bg-[--color-light] p-3 pl-4 border-2 border-[--color-dark] shadow-[4px_4px_0px_0px_var(--color-dark)] focus:outline-none focus:ring-0 focus:shadow-[2px_2px_0px_0px_var(--color-dark)] focus:translate-y-0.5 focus:translate-x-0.5 transition-all font-medium text-[--color-dark]" />
+                  <input type="email" id="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="john@example.com" className="w-full bg-[--color-light] p-3 pl-4 border-2 border-[--color-dark] shadow-[4px_4px_0px_0px_var(--color-dark)] focus:outline-none focus:ring-0 focus:shadow-[2px_2px_0px_0px_var(--color-dark)] focus:translate-y-0.5 focus:translate-x-0.5 transition-all font-medium text-[--color-dark]" />
                 </div>
 
                 <div className="space-y-2">
                   <label htmlFor="subject" className="block text-sm font-black text-[--color-dark] uppercase tracking-wider">Sujet</label>
-                  <input type="text" id="subject" placeholder="Partenariat, Question..." className="w-full bg-[--color-light] p-3 pl-4 border-2 border-[--color-dark] shadow-[4px_4px_0px_0px_var(--color-dark)] focus:outline-none focus:ring-0 focus:shadow-[2px_2px_0px_0px_var(--color-dark)] focus:translate-y-0.5 focus:translate-x-0.5 transition-all font-medium text-[--color-dark]" />
+                  <input type="text" id="subject" required value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="Partenariat, Question..." className="w-full bg-[--color-light] p-3 pl-4 border-2 border-[--color-dark] shadow-[4px_4px_0px_0px_var(--color-dark)] focus:outline-none focus:ring-0 focus:shadow-[2px_2px_0px_0px_var(--color-dark)] focus:translate-y-0.5 focus:translate-x-0.5 transition-all font-medium text-[--color-dark]" />
                 </div>
 
                 <div className="space-y-2">
                   <label htmlFor="message" className="block text-sm font-black text-[--color-dark] uppercase tracking-wider">Votre Message</label>
-                  <textarea id="message" rows={4} placeholder="Comment pouvons-nous vous aider ?" className="w-full bg-[--color-light] p-3 pl-4 border-2 border-[--color-dark] shadow-[4px_4px_0px_0px_var(--color-dark)] focus:outline-none focus:ring-0 focus:shadow-[2px_2px_0px_0px_var(--color-dark)] focus:translate-y-0.5 focus:translate-x-0.5 transition-all font-medium text-[--color-dark] resize-none"></textarea>
+                  <textarea id="message" rows={4} required value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Comment pouvons-nous vous aider ?" className="w-full bg-[--color-light] p-3 pl-4 border-2 border-[--color-dark] shadow-[4px_4px_0px_0px_var(--color-dark)] focus:outline-none focus:ring-0 focus:shadow-[2px_2px_0px_0px_var(--color-dark)] focus:translate-y-0.5 focus:translate-x-0.5 transition-all font-medium text-[--color-dark] resize-none"></textarea>
                 </div>
 
                 <button type="submit" className="w-full py-4 mt-4 bg-[--color-cta] text-[--color-dark] font-black text-lg md:text-xl uppercase tracking-widest border-4 border-[--color-dark] shadow-[6px_6px_0px_0px_var(--color-dark)] hover:shadow-[2px_2px_0px_0px_var(--color-dark)] hover:translate-x-1 hover:translate-y-1 transition-all flex justify-center items-center gap-3">

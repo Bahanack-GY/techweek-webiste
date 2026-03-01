@@ -7,6 +7,7 @@ import Schools from '../components/Schools';
 import Activities from '../components/Activities';
 import CompanyTicker from '../components/CompanyTicker';
 import Schedule from '../components/Schedule';
+import Registration from '../features/registration/Registration';
 import Footer from '../components/Footer';
 
 function Home() {
@@ -21,6 +22,7 @@ function Home() {
             <Activities />
             <CompanyTicker />
             <Schedule />
+            <Registration />
             <Footer />
         </main>
     );
